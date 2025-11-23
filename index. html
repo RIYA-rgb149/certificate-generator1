@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Certificate Generator</title>
+</head>
+<body>
+  <h2>Enter Your Name:</h2>
+  <input type="text" id="name" placeholder="Your Name" />
+  <button onclick="generateCertificate()">Download Certificate</button>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    function generateCertificate() {
+      const { jsPDF } = window.jspdf;
+      const name = document.getElementById("name").value.trim();
+      if (!name) {
+        alert("Please enter your name");
+        return;
+      }
+
+      const doc = new jsPDF({
+        orientation: "landscape",
+        unit: "px",
+        format: [800, 600],
+      });
+
+      // If you have a background image, put its name below and upload it to repo
+      // doc.addImage("certificate_template.png", "PNG", 0, 0, 800, 600);
+
+      doc.setFontSize(24);
+      doc.text("Certificate of Completion", 400, 200, null, null, "center");
+      doc.setFontSize(18);
+      doc.text("Awarded to", 400, 260, null, null, "center");
+      doc.setFontSize(30);
+      doc.text(name, 400, 330, null, null, "center");
+
+      doc.save("certificate.pdf");
+    }
+  </script>
+</body>
+</html>
